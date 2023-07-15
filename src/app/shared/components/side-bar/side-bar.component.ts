@@ -68,12 +68,12 @@ export class SidebarComponent implements OnInit {
 
   }
 
- /* goTo($event:any):void{
+ goTo($event:any):void{
     this.router.navigate(['/','favorites'],{
       queryParams:{
         key1:'value1'
       }
     })
     console.log($event)
-  }*/
+  }
 }
