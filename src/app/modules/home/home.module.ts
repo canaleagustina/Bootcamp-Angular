@@ -17,6 +17,7 @@ import { AuthModule } from '@modules/auth/auth.module';
     SharedModule,
     AuthModule
   ]
+  
 })
 export class HomeModule {
   
