@@ -41,3 +41,4 @@ export class MediaPlayerComponent implements OnInit, OnDestroy {
     console.log('boom')
   }
 }
+ 
