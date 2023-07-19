@@ -1,15 +1,23 @@
+import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-callback:EventEmitter<any> =new EventEmitter<any>
+private readonly URL=environment.api
 
-constructor(){}
 
-sendCredentials(email:string, password:string){
-  console.log('ok', email, password)
+constructor(private http:HttpClient){}
+
+sendCredentials(email:string, password:string): Observable<any>{
+  const body ={
+    email,
+    password
+  }
+ return this.http.post(`${this.URL}/auth/login`,body)
 }
 }

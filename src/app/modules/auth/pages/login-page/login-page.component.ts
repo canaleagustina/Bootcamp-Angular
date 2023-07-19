@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '@modules/auth/services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login-page',
@@ -9,8 +11,10 @@ import { AuthService } from '@modules/auth/services/auth.service';
 })
 export class LoginPageComponent implements OnInit {
 
+  errorSession: boolean = false
   formLogin:FormGroup = new FormGroup({});
-  constructor(private authService:AuthService){}
+  constructor(private authService: AuthService, private cookie: CookieService,
+    private router: Router){}
 
   ngOnInit(): void {
   this.formLogin = new FormGroup(
@@ -27,8 +31,20 @@ export class LoginPageComponent implements OnInit {
   })
   }
 
-sendLogin():void {
-const {email,password} = this.formLogin.value
-this.authService.sendCredentials(email,password)
-}
+  sendLogin(): void {
+    const { email, password } = this.formLogin.value
+    this.authService.sendCredentials(email, password)
+      //TODO: 200 <400
+      .subscribe(responseOk => { //TODO: Cuando el usuario credenciales Correctas ✔✔
+        console.log('Session iniciada correcta', responseOk);
+        const { tokenSession, data } = responseOk
+        this.cookie.set('token', tokenSession, 4, '/') //TODO:📌📌📌📌
+        this.router.navigate(['/', 'tracks'])
+      },
+        err => {//TODO error 400>=
+          this.errorSession = true
+          console.log('Ocurrio error con tu email o password');
+        })
+
+      }
 }
