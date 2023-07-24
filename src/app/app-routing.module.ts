@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeModule } from './modules/home/home.module';
 import { HomePageComponent } from '@modules/home/pages/home-page/home-page.component';
 import { SessionGuard } from '@core/guards/session.guard';
 
