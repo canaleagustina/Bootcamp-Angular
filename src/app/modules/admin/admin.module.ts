@@ -1,8 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { SharedModule } from '@shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +13,14 @@ import { AdminPageComponent } from './pages/admin-page/admin-page.component';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
-export class AdminModule { }
+export class AdminModule implements OnInit{
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+ }

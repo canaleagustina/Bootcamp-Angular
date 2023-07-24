@@ -35,7 +35,12 @@ export class SidebarComponent implements OnInit {
         icon: 'uil uil-chart',
         router: ['/', 'favorites'],
         query: { hola: 'mundo' }
-      }
+      },
+      {
+        name: 'Admin',
+        icon: 'uil uil-user',
+        router: ['/', 'admin'],
+      },
     ]
 
     this.mainMenu.accessLink = [
