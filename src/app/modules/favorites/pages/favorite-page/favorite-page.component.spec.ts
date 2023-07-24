@@ -6,10 +6,14 @@ describe('FavoritePageComponent', () => {
   let component: FavoritePageComponent;
   let fixture: ComponentFixture<FavoritePageComponent>;
 
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ FavoritePageComponent ]
+    })
+    .compileComponents();
+  });
+
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [FavoritePageComponent]
-    });
     fixture = TestBed.createComponent(FavoritePageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

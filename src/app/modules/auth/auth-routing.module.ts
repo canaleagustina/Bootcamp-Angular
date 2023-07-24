@@ -4,12 +4,12 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 const routes: Routes = [
   {
-    path:'login',
-    component:LoginPageComponent
+    path:'login', //http://localhost:4200/auth/login
+    component: LoginPageComponent
   },
   {
-    path:'**',
-    redirectTo:'/auth/login'
+    path: '**',
+    redirectTo: '/auth/login' //Redireccionar a login
   }
 ];
 
