@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import * as dataRaw from '../../../data/tracks.json'
 import { TrackModel } from '@core/models/tracks.model';
+import { TrackService } from '@modules/tracks/services/track.service';
 
 @Component({
   selector: 'app-play-list-body',
@@ -8,23 +8,31 @@ import { TrackModel } from '@core/models/tracks.model';
   styleUrls: ['./play-list-body.component.css']
 })
 export class PlayListBodyComponent implements OnInit {
-  @Input() tracks:TrackModel[]=[]
-  optionSort:{property:string | null, order:string } = {property:null, order:'asc'}
+  @Input() tracks: TrackModel[] = [];
+  optionSort: { property: string | null, order: string } = { property: null, order: 'asc' };
   
+  constructor(private tracksService: TrackService) { }
+
   ngOnInit(): void {
-    const {data}: any = (dataRaw as any).default
-    this.tracks=data;
-    
-    } 
-
-constructor(){}
-
-changeSort(property:string):void{
-  const {order} = this.optionSort
-  this.optionSort = {
-    property,
-    order:order === 'asc'? 'desc':'asc'
+    this.fetchTracksFromApi();
   }
-}
 
+  fetchTracksFromApi(): void {
+    this.tracksService.getAllTracks$().subscribe(
+      (data: TrackModel[]) => {
+        this.tracks = data;
+      },
+      (error) => {
+        console.error('Error al obtener las canciones desde la API:', error);
+      }
+    );
+  }
+
+  changeSort(property: string): void {
+    const { order } = this.optionSort;
+    this.optionSort = {
+      property,
+      order: order === 'asc' ? 'desc' : 'asc'
+    };
+  }
 }
