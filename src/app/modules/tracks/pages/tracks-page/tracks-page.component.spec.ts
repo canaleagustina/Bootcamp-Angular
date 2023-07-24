@@ -6,10 +6,14 @@ describe('TracksPageComponent', () => {
   let component: TracksPageComponent;
   let fixture: ComponentFixture<TracksPageComponent>;
 
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ TracksPageComponent ]
+    })
+    .compileComponents();
+  });
+
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [TracksPageComponent]
-    });
     fixture = TestBed.createComponent(TracksPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,8 +1,8 @@
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthService } from '@modules/auth/services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -11,23 +11,24 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class LoginPageComponent implements OnInit {
   errorSession: boolean = false
-  formLogin: FormGroup = new FormGroup({});
+  formLogin: UntypedFormGroup = new UntypedFormGroup({});
 
   constructor(private authService: AuthService, private cookie: CookieService,
     private router: Router) { }
 
   ngOnInit(): void {
-    this.formLogin = new FormGroup(
+    this.formLogin = new UntypedFormGroup(
       {
-        email: new FormControl('', [
+        email: new UntypedFormControl('', [
           Validators.required,
           Validators.email
         ]),
-        password: new FormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(12)
-        ])
+        password: new UntypedFormControl('',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(12)
+          ])
       }
     )
   }
@@ -35,16 +36,18 @@ export class LoginPageComponent implements OnInit {
   sendLogin(): void {
     const { email, password } = this.formLogin.value
     this.authService.sendCredentials(email, password)
-      .subscribe(responseOK => {//cuando el usuario se identifica correctamente
-        console.log('Inicio de sesión correcto', responseOK)
-         const { tokenSession, data } = responseOK
-         this.cookie.set('token', tokenSession, 4, '/')
-         this.router.navigate(['/', 'tracks'])
+      //TODO: 200 <400
+      .subscribe(responseOk => { //TODO: Cuando el usuario credenciales Correctas ✔✔
+        console.log('Session iniciada correcta', responseOk);
+        const { tokenSession, data } = responseOk
+        this.cookie.set('token', tokenSession, 4, '/') //TODO:📌📌📌📌
+        this.router.navigate(['/', 'tracks'])
       },
-        err => {
+        err => {//TODO error 400>=
           this.errorSession = true
-          console.log('Password o Email incorrecto', err)
-        }
-      )
+          console.log('⚠⚠⚠⚠Ocurrio error con tu email o password');
+        })
+
   }
+
 }

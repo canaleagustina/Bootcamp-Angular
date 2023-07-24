@@ -1,6 +1,6 @@
-import { TrackService } from '@modules/tracks/services/track.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TrackModel } from '@core/models/tracks.model';
+import { TrackService } from '@modules/tracks/services/track.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,29 +12,38 @@ export class TracksPageComponent implements OnInit, OnDestroy {
 
   tracksTrending: Array<TrackModel> = []
   tracksRandom: Array<TrackModel> = []
+
   listObservers$: Array<Subscription> = []
 
-  constructor(private trackService: TrackService) { }
+  constructor(private tracksService: TrackService) { }
 
   ngOnInit(): void {
-    this.loadDataAll() //TODO 📌📌
-    this.loadDataRandom() //TODO 📌📌
+    this.loadDataAll()
+    this.loadDataRandom()
   }
-
-  async loadDataAll(): Promise<any> {
-    this.tracksTrending = await this.trackService.getAllTracks$().toPromise()
-
-  }
-
-  loadDataRandom(): void {
-    this.trackService.getAllRandom$()
+//Cargar las canciones mediante suscribe
+  // loadDataAll(): void {
+  //   this.tracksService.getAllTracks$()
+  //     .subscribe((response: TrackModel[]) => {
+  //       this.tracksTrending = response
+  //     })
+  // }
+   loadDataRandom(): void {
+    this.tracksService.getAllRandom$()
       .subscribe((response: TrackModel[]) => {
         this.tracksRandom = response
+      }, err => {
+        alert('Error de conexion')
+        console.log('Error De Conexión')
       })
-  }
+   }
 
+  //Cargar las canciones como Promise
+  async loadDataAll(): Promise<any> {
+    this.tracksTrending = await this.tracksService.getAllTracks$().toPromise()
+   // this.tracksRandom = await this.tracksService.getAllRamdom$().toPromise()
+  }
   ngOnDestroy(): void {
 
   }
-
 }
