@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { AdminRoleGuard } from '@core/guards/admin-role.guard'; // Asegúrate de que la ruta sea correcta.
 
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.css']
 })
-
 export class SidebarComponent implements OnInit {
 
   mainMenu: {
-    defaultOptions: Array<any>, accessLink: Array<any>
-  } = { defaultOptions: [], accessLink: [] }
+    defaultOptions: Array<any>,
+    accessLink: Array<any>
+  } = { defaultOptions: [], accessLink: [] };
 
-  customOptions: Array<any> = []
-  adminOptions: Array<any> = []
+  customOptions: Array<any> = [];
+  adminOptions: Array<any> = [];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private adminRoleGuard: AdminRoleGuard) { }
 
   ngOnInit(): void {
     this.mainMenu.defaultOptions = [
@@ -37,8 +37,7 @@ export class SidebarComponent implements OnInit {
         router: ['/', 'favorites'],
         query: { hola: 'mundo' }
       },
-    
-    ]
+    ];
 
     this.mainMenu.accessLink = [
       {
@@ -49,17 +48,15 @@ export class SidebarComponent implements OnInit {
         name: 'Canciones que te gustan',
         icon: 'uil-heart-medical'
       }
-    ]
-
+    ];
 
     this.adminOptions = [
       {
         name: 'Admin',
         icon: 'uil uil-user',
-          router: ['/admin']
+        router: ['/admin']
       }
-
-    ]
+    ];
 
     this.customOptions = [
       {
@@ -78,16 +75,20 @@ export class SidebarComponent implements OnInit {
         name: 'Mi lista º4',
         router: ['/']
       }
-    ]
-
+    ];
   }
 
- goTo($event:any):void{
-    this.router.navigate(['/','favorites'],{
-      queryParams:{
-        key1:'value1'
+  isAdminUser(): boolean {
+    const role: string = this.adminRoleGuard.getRole();
+    return role === 'admin';
+  }
+
+  goTo($event: any): void {
+    this.router.navigate(['/', 'favorites'], {
+      queryParams: {
+        key1: 'value1'
       }
-    })
-    console.log($event)
+    });
+    console.log($event);
   }
 }

@@ -15,7 +15,11 @@ export class AdminRoleGuard implements CanActivate {
     } else {
       this.router.navigate(['/auth/login']); // Redirige a la página de login si el rol no es "admin".
       return false;
-      
     }
+  }
+
+  // Nuevo método público para obtener el rol del usuario.
+  getRole(): string {
+    return this.cookieService.get('role');
   }
 }
