@@ -15,6 +15,7 @@ export class SidebarComponent implements OnInit {
   } = { defaultOptions: [], accessLink: [] }
 
   customOptions: Array<any> = []
+  adminOptions: Array<any> = []
 
   constructor(private router: Router) { }
 
@@ -36,11 +37,7 @@ export class SidebarComponent implements OnInit {
         router: ['/', 'favorites'],
         query: { hola: 'mundo' }
       },
-      {
-        name: 'Admin',
-        icon: 'uil uil-user',
-        router: ['/', 'admin'],
-      },
+    
     ]
 
     this.mainMenu.accessLink = [
@@ -52,6 +49,16 @@ export class SidebarComponent implements OnInit {
         name: 'Canciones que te gustan',
         icon: 'uil-heart-medical'
       }
+    ]
+
+
+    this.adminOptions = [
+      {
+        name: 'Admin',
+        icon: 'uil uil-user',
+          router: ['/admin']
+      }
+
     ]
 
     this.customOptions = [

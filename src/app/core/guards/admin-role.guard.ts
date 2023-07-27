@@ -15,6 +15,7 @@ export class AdminRoleGuard implements CanActivate {
     } else {
       this.router.navigate(['/auth/login']); // Redirige a la página de login si el rol no es "admin".
       return false;
+      
     }
   }
 }
