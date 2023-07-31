@@ -21,7 +21,7 @@ export class TrackService {
   //Función para filtrar por id
   private skipById(listTracks: TrackModel[], id: number): Promise<TrackModel[]> {
     return new Promise((resolve, reject) => {
-      const listTmp = listTracks.filter(a => a._id !== id)
+      const listTmp = listTracks.filter(a => a.uid !== id)
       resolve(listTmp)
     })
   }
