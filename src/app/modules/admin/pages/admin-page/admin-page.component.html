@@ -1,5 +1,5 @@
 <div>
-    <h1>Modificar canciones</h1>
+    <h1>{{ isEditing ? 'Editar canción' : 'Crear canción' }}</h1>
     <div>
       <form (submit)="onAddTrack($event)">
         <p>Cancion</p>
@@ -8,49 +8,30 @@
         <input type="text" name="album" [(ngModel)]="newTrack.album" required>
         <p>Cover</p>
         <input type="text" name="cover" [(ngModel)]="newTrack.cover" required>
+        <img *ngIf="newTrack.cover" [src]="newTrack.cover" alt="{{ newTrack.name }}">
         <p>Artista</p>
         <input type="text" name="artist" [(ngModel)]="newTrack.artist" required>
         <p>Id</p>
         <input type="text" name="uid" [(ngModel)]="newTrack.uid" required>
-        <button type="submit">Agregar</button>
+        <button type="submit">{{ isEditing ? 'Guardar Cambios' : 'Agregar Canción' }}</button>
       </form>
     </div>
   </div>
   
-  
-<div class="play-list-body">
+  <div class="play-list-body">
     <ul class="play-list-table-header">
-        <li (click)="changeSort('name')">Nombre ❤</li>
-        <li (click)="changeSort('album')">álbum 🆗</li>
-        <li>fecha incorporación 🍌😁</li>
-        <li><i class="uil uil-clock-eight"></i></li>
+      <li (click)="changeSort('name')">Nombre ❤</li>
+      <li (click)="changeSort('album')">álbum 🆗</li>
+      <li>Editar 🖊️</li>
     </ul>
-    <ul class="play-list-rows" *ngFor="let track of tracks |orderList:optionSort.property:optionSort.order">
-        <li class="track-name">
-            <ng-container *ngTemplateOutlet="coverSection;context:{track:track}"></ng-container>
-        </li>
-        <li class="track-name-opacity">
-            {{track.album}}
-        </li>
-        <li class="track-name-opacity">
-            {{track.album}}
-        </li>
-        <li class="track-name-opacity">
-            {{track.album}}
-        </li>
-
+    <ul class="play-list-rows" *ngFor="let track of tracks | orderList:optionSort.property:optionSort.order">
+      <li class="track-name">
+        <img class="cover-track" [src]="track.cover" [alt]="track.name">
+      </li>
+      <li class="track-name-opacity">{{ track.album }}</li>
+      <li class="track-name-opacity">
+        <button (click)="onEditTrack(track)">Editar</button>
+      </li>
     </ul>
-</div>
-
-<!--template del cover-->
-<ng-template #coverSection let-track="track">
-
-    <div class="cover-section">
-        <img appImgBroken class="cover-track" [src]="track.cover" [alt]="track.name">
-        <div class="cover-info">
-            <div class="name-track">{{track.name}}</div>
-            <div class="name-track-details">{{track.artist.name}}</div>
-        </div>
-    </div>
-
-</ng-template>
+  </div>
+  

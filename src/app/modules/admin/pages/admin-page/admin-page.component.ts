@@ -10,10 +10,12 @@ import { AdminService } from '../../services/admin.service';
 })
 export class AdminPageComponent {
   @Input() tracks: TrackModel[] = [];
-  optionSort: { property: string | null, order: string } = { property: null, order: 'asc' };
+  optionSort: { property: string | null; order: string } = { property: null, order: 'asc' };
   newTrack: TrackModel = { name: '', album: '', cover: '', url: '', uid: '' };
+  selectedTrack: TrackModel | undefined;
+  isEditing = false;
 
-  constructor(private tracksService: TrackService, private adminService: AdminService) { }
+  constructor(private tracksService: TrackService, private adminService: AdminService) {}
 
   ngOnInit(): void {
     this.fetchTracksFromApi();
@@ -32,16 +34,41 @@ export class AdminPageComponent {
 
   onAddTrack(event: Event): void {
     event.preventDefault();
-    this.adminService.addTrack$(this.newTrack).subscribe(
-      (response) => {
-        console.log('Track added successfully:', response);
-        this.newTrack = { name: '', album: '', cover: '', url: '', uid: '' };
-        this.fetchTracksFromApi(); // Refresh the track list after adding a new track
-      },
-      (error) => {
-        console.error('Error adding track:', error);
-      }
-    );
+    if (this.isEditing && this.selectedTrack) {
+      // Actualizar solo el nombre de la canción en el objeto selectedTrack
+      this.selectedTrack.name = this.newTrack.name;
+      
+      // Llamar al servicio para actualizar solo el nombre de la canción
+      this.adminService.updateTrack$(this.selectedTrack).subscribe(
+        (response) => {
+          console.log('Track name updated successfully:', response);
+          this.newTrack = { name: '', album: '', cover: '', url: '', uid: '' };
+          this.isEditing = false;
+          this.fetchTracksFromApi(); // Refrescar la lista de canciones después de actualizar una canción
+        },
+        (error) => {
+          console.error('Error updating track name:', error);
+        }
+      );
+    } else {
+      // Agregar una nueva canción
+      this.adminService.addTrack$(this.newTrack).subscribe(
+        (response) => {
+          console.log('Track added successfully:', response);
+          this.newTrack = { name: '', album: '', cover: '', url: '', uid: '' };
+          this.fetchTracksFromApi(); // Refrescar la lista de canciones después de agregar una nueva canción
+        },
+        (error) => {
+          console.error('Error adding track:', error);
+        }
+      );
+    }
+  }
+
+  onEditTrack(track: TrackModel): void {
+    this.selectedTrack = track;
+    this.newTrack = { ...track };
+    this.isEditing = true;
   }
 
   changeSort(property: string): void {
