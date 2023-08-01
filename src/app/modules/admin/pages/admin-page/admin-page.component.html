@@ -24,8 +24,14 @@
         <input type="text" name="uid" [(ngModel)]="newTrack.uid" required>
       </div>
       <div class="form-buttons">
-        <button class="admin-button" type="submit">{{ isEditing ? 'Guardar Cambios' : 'Agregar Canción' }}</button>
-        <button class="admin-button" type="button" *ngIf="isEditing" (click)="onCancelEdit()">Atras</button>
+        <button class="admin-button" type="submit">
+          {{ isEditing ? 'Guardar Cambios' : 'Agregar Canción' }}
+          <i class="fas fa-check"></i> 
+        </button>
+        <button class="admin-button" type="button" *ngIf="isEditing" (click)="onCancelEdit()">
+          Atras
+          <i class="fas fa-undo"></i> 
+        </button>
       </div>
     </form>
   </div>
@@ -48,10 +54,14 @@
     </li>
     <li class="track-name-opacity">{{ track.album }}</li>
     <li class="track-name-opacity">
-      <button (click)="onEditTrack(track)">Editar</button>
+      <button (click)="onEditTrack(track)">
+        <i class="fas fa-pencil-alt"></i> 
+      </button>
     </li>
     <li class="track-name-opacity">
-      <button (click)="onDeleteTrack(track.uid.toString())">Eliminar</button>
+      <button (click)="onDeleteTrack(track.uid.toString())">
+        <i class="fas fa-trash-alt"></i> 
+      </button>
     </li>
   </ul>
 </div>
