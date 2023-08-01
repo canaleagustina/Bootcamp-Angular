@@ -46,7 +46,7 @@
   </ul>
   <ul class="play-list-rows" *ngFor="let track of tracks | orderList:optionSort.property:optionSort.order">
     <li class="track-name">
-      <img class="cover-track" [src]="track.cover" [alt]="track.name" width="40" height="40">
+      <img class="cover-track" appImgBroken [customImg]="'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/2048px-Angular_full_color_logo.svg.png'" [src]="track.cover" [alt]="track.name" width="40" height="40">
       <div class="cover-info">
         <div class="name-track">{{ track.name }}</div>
         <div class="name-track-details">{{ track.artist }}</div>
