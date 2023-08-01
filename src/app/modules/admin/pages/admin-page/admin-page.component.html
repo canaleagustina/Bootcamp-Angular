@@ -1,39 +1,40 @@
 <div>
-    <h1>{{ isEditing ? 'Editar canción' : 'Crear canción' }}</h1>
-    <div>
-      <form (submit)="onAddTrack($event)">
-        <p>Cancion</p>
-        <input type="text" name="name" [(ngModel)]="newTrack.name" required>
-        <p>Album</p>
-        <input type="text" name="album" [(ngModel)]="newTrack.album" required>
-        <p>Cover</p>
-        <input type="text" name="cover" [(ngModel)]="newTrack.cover" required>
-        <img *ngIf="newTrack.cover" [src]="newTrack.cover" alt="{{ newTrack.name }}">
-        <p>Artista</p>
-        <input type="text" name="artist" [(ngModel)]="newTrack.artist" required>
-        <p>Id</p>
-        <input type="text" name="uid" [(ngModel)]="newTrack.uid" required>
-        <button type="submit">{{ isEditing ? 'Guardar Cambios' : 'Agregar Canción' }}</button>
-      </form>
-    </div>
+  <h1>{{ isEditing ? 'Editar canción' : 'Crear canción' }}</h1>
+  <div>
+    <form (submit)="onAddTrack($event)">
+      <p>Cancion</p>
+      <input type="text" name="name" [(ngModel)]="newTrack.name" required>
+      <p>Album</p>
+      <input type="text" name="album" [(ngModel)]="newTrack.album" required>
+      <p>Cover</p>
+      <input type="text" name="cover" [(ngModel)]="newTrack.cover" required>
+      <img *ngIf="newTrack.cover" [src]="newTrack.cover" alt="{{ newTrack.name }}">
+      <p>Artista</p>
+      <input type="text" name="artist" [(ngModel)]="newTrack.artist" required>
+      <p>Id</p>
+      <input type="text" name="uid" [(ngModel)]="newTrack.uid" required>
+      <button type="submit">{{ isEditing ? 'Guardar Cambios' : 'Agregar Canción' }}</button>
+    </form>
   </div>
-  
-  <div class="play-list-body">
-    <ul class="play-list-table-header">
-      <li (click)="changeSort('name')">Nombre ❤</li>
-      <li (click)="changeSort('album')">álbum 🆗</li>
-      <li>Editar 🖊️</li>
-      <li>Eliminar ❌</li>
-    </ul>
-    <ul class="play-list-rows" *ngFor="let track of tracks | orderList:optionSort.property:optionSort.order">
-      <li class="track-name">
-        <img class="cover-track" [src]="track.cover" [alt]="track.name">
-      </li>
-      <li class="track-name-opacity">{{ track.album }}</li>
-      <li class="track-name-opacity">
-        <button (click)="onEditTrack(track)">Editar</button>
-        <button (click)="onDeleteTrack(track.uid.toString())">Eliminar</button>
-      </li>
-    </ul>
-  </div>
-  
+</div>
+
+<div class="play-list-body">
+  <ul class="play-list-table-header">
+    <li (click)="changeSort('name')">Nombre ❤</li>
+    <li (click)="changeSort('album')">álbum 🆗</li>
+    <li>Editar 🖊️</li>
+    <li>Eliminar ❌</li>
+  </ul>
+  <ul class="play-list-rows" *ngFor="let track of tracks | orderList:optionSort.property:optionSort.order">
+    <li class="track-name">
+      <img class="cover-track" [src]="track.cover" [alt]="track.name">
+    </li>
+    <li class="track-name-opacity">{{ track.album }}</li>
+    <li class="track-name-opacity">
+      <button (click)="onEditTrack(track)">Editar</button>
+    </li>
+    <li class="track-name-opacity">
+      <button (click)="onDeleteTrack(track.uid.toString())">Eliminar</button>
+    </li>
+  </ul>
+</div>
