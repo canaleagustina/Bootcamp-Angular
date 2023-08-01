@@ -1,7 +1,8 @@
+<!-- admin-page.component.html -->
 <div>
   <h1>{{ isEditing ? 'Editar canción' : 'Crear canción' }}</h1>
   <div>
-    <form (submit)="onAddTrack($event)">
+    <form #trackForm="ngForm" (submit)="onAddTrack($event, trackForm)">
       <p>Cancion</p>
       <input type="text" name="name" [(ngModel)]="newTrack.name" required>
       <p>Album</p>
@@ -14,6 +15,7 @@
       <p>Id</p>
       <input type="text" name="uid" [(ngModel)]="newTrack.uid" required>
       <button type="submit">{{ isEditing ? 'Guardar Cambios' : 'Agregar Canción' }}</button>
+      <button type="button" *ngIf="isEditing" (click)="onCancelEdit()">Atras</button>
     </form>
   </div>
 </div>
@@ -36,5 +38,5 @@
     <li class="track-name-opacity">
       <button (click)="onDeleteTrack(track.uid.toString())">Eliminar</button>
     </li>
-  </ul> 
+  </ul>
 </div>

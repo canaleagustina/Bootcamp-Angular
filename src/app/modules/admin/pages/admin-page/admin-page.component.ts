@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+// admin-page.component.ts
+import { Component, Input, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { TrackModel } from '@core/models/tracks.model';
 import { TrackService } from '@modules/tracks/services/track.service';
 import { AdminService } from '../../services/admin.service';
@@ -32,18 +34,21 @@ export class AdminPageComponent {
     );
   }
 
-  onAddTrack(event: Event): void {
+  @ViewChild('trackForm') trackForm!: NgForm; // Obtener una referencia al formulario
+
+  onAddTrack(event: Event, form: NgForm): void {
     event.preventDefault();
     if (this.isEditing && this.selectedTrack) {
       // Actualizar solo el nombre de la canción en el objeto selectedTrack
       this.selectedTrack.name = this.newTrack.name;
-      
+
       // Llamar al servicio para actualizar solo el nombre de la canción
       this.adminService.updateTrack$(this.selectedTrack).subscribe(
         (response) => {
           console.log('Track name updated successfully:', response);
           this.newTrack = { name: '', album: '', cover: '', url: '', uid: '' };
           this.isEditing = false;
+          this.trackForm.resetForm(); // Resetear el formulario después de guardar los cambios
           this.fetchTracksFromApi(); // Refrescar la lista de canciones después de actualizar una canción
         },
         (error) => {
@@ -56,6 +61,7 @@ export class AdminPageComponent {
         (response) => {
           console.log('Track added successfully:', response);
           this.newTrack = { name: '', album: '', cover: '', url: '', uid: '' };
+          this.trackForm.resetForm(); // Resetear el formulario después de agregar una nueva canción
           this.fetchTracksFromApi(); // Refrescar la lista de canciones después de agregar una nueva canción
         },
         (error) => {
@@ -69,6 +75,11 @@ export class AdminPageComponent {
     this.selectedTrack = track;
     this.newTrack = { ...track };
     this.isEditing = true;
+  }
+
+  onCancelEdit(): void {
+    this.isEditing = false;
+    this.trackForm.resetForm(); // Resetear el formulario después de cancelar la edición
   }
 
   onDeleteTrack(uid: string): void {
