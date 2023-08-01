@@ -35,9 +35,15 @@
     font-weight: 300;
 }
 
+.track-name{
+    display: flex;
+    padding: 1em;
+    gap:1em;
+}
+
 .cover-section {
     display: flex;
-    padding: 0
+    padding: 0;
 }
 
 .cover-section .cover-track {

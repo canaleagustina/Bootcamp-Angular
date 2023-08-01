@@ -1,4 +1,3 @@
-<!-- admin-page.component.html -->
 <div>
   <h1>{{ isEditing ? 'Editar canción' : 'Crear canción' }}</h1>
   <div>
@@ -9,7 +8,11 @@
       <input type="text" name="album" [(ngModel)]="newTrack.album" required>
       <p>Cover</p>
       <input type="text" name="cover" [(ngModel)]="newTrack.cover" required>
-      <img *ngIf="newTrack.cover" [src]="newTrack.cover" alt="{{ newTrack.name }}">
+      <img *ngIf="newTrack.cover" [src]="newTrack.cover" alt="{{ newTrack.name }}" width="40" height="40">
+      <div class="cover-info">
+        <div class="name-track">{{ newTrack.name }}</div>
+        <div class="name-track-details">{{ newTrack.artist }}</div>
+      </div>
       <p>Artista</p>
       <input type="text" name="artist" [(ngModel)]="newTrack.artist" required>
       <p>Id</p>
@@ -29,7 +32,11 @@
   </ul>
   <ul class="play-list-rows" *ngFor="let track of tracks | orderList:optionSort.property:optionSort.order">
     <li class="track-name">
-      <img class="cover-track" [src]="track.cover" [alt]="track.name">
+      <img class="cover-track" [src]="track.cover" [alt]="track.name" width="40" height="40">
+      <div class="cover-info">
+        <div class="name-track">{{ track.name }}</div>
+        <div class="name-track-details">{{ track.artist }}</div>
+      </div>
     </li>
     <li class="track-name-opacity">{{ track.album }}</li>
     <li class="track-name-opacity">
