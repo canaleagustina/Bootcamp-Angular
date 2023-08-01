@@ -71,6 +71,18 @@ export class AdminPageComponent {
     this.isEditing = true;
   }
 
+  onDeleteTrack(uid: string): void {
+    this.adminService.deleteTrack$(uid).subscribe(
+      (response) => {
+        console.log('Track deleted successfully:', response);
+        this.fetchTracksFromApi(); // Refrescar la lista de canciones después de eliminar una canción
+      },
+      (error) => {
+        console.error('Error deleting track:', error);
+      }
+    );
+  }
+
   changeSort(property: string): void {
     const { order } = this.optionSort;
     this.optionSort = {

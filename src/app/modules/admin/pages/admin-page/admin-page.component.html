@@ -23,6 +23,7 @@
       <li (click)="changeSort('name')">Nombre ❤</li>
       <li (click)="changeSort('album')">álbum 🆗</li>
       <li>Editar 🖊️</li>
+      <li>Eliminar ❌</li>
     </ul>
     <ul class="play-list-rows" *ngFor="let track of tracks | orderList:optionSort.property:optionSort.order">
       <li class="track-name">
@@ -31,6 +32,7 @@
       <li class="track-name-opacity">{{ track.album }}</li>
       <li class="track-name-opacity">
         <button (click)="onEditTrack(track)">Editar</button>
+        <button (click)="onDeleteTrack(track.uid.toString())">Eliminar</button>
       </li>
     </ul>
   </div>
