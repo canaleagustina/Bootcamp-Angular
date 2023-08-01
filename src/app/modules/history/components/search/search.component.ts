@@ -7,9 +7,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  @Output() callbackData: EventEmitter<any> = new EventEmitter()
-
-  src: string = ''
+  @Output() callbackData: EventEmitter<any> = new EventEmitter();
+  src: string = '';
+  searchResults: any[] = [];
 
   constructor() { }
 
@@ -18,9 +18,10 @@ export class SearchComponent implements OnInit {
 
   callSearch(term: string): void {
     if (term.length >= 3) {
-      this.callbackData.emit(term)
+      this.callbackData.emit(term);
       console.log('🔴 Llamamos a nuestra API HTTP GET---> ', term);
+    } else {
+      this.searchResults = []; // Limpiar los resultados si el término de búsqueda es menor a 3 letras
     }
   }
-
 }

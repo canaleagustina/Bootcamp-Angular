@@ -17,10 +17,9 @@ export class HistoryPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  receiveData(event: string): void {
-    //Recibir el termino de busqueda
-    console.log('History page component (Padre)', event)
-    this.listResults$ = this.searchService.searchTracks$(event)
 
+  receiveData(event: string): void {
+    console.log('History page component (Padre)', event);
+    this.listResults$ = this.searchService.searchTracks$(event);
   }
 }
