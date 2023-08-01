@@ -1,24 +1,32 @@
 <div>
   <h1>{{ isEditing ? 'Editar canción' : 'Crear canción' }}</h1>
   <div>
-    <form #trackForm="ngForm" (submit)="onAddTrack($event, trackForm)">
-      <p>Cancion</p>
-      <input type="text" name="name" [(ngModel)]="newTrack.name" required>
-      <p>Album</p>
-      <input type="text" name="album" [(ngModel)]="newTrack.album" required>
-      <p>Cover</p>
-      <input type="text" name="cover" [(ngModel)]="newTrack.cover" required>
-      <img *ngIf="newTrack.cover" [src]="newTrack.cover" alt="{{ newTrack.name }}" width="40" height="40">
-      <div class="cover-info">
-        <div class="name-track">{{ newTrack.name }}</div>
-        <div class="name-track-details">{{ newTrack.artist }}</div>
+    <form #trackForm="ngForm" class="form-admin" (submit)="onAddTrack($event, trackForm)">
+      <div class="form-row">
+        <label for="name">Cancion</label>
+        <input type="text" name="name" [(ngModel)]="newTrack.name" required>
       </div>
-      <p>Artista</p>
-      <input type="text" name="artist" [(ngModel)]="newTrack.artist" required>
-      <p>Id</p>
-      <input type="text" name="uid" [(ngModel)]="newTrack.uid" required>
-      <button type="submit">{{ isEditing ? 'Guardar Cambios' : 'Agregar Canción' }}</button>
-      <button type="button" *ngIf="isEditing" (click)="onCancelEdit()">Atras</button>
+      <div class="form-row">
+        <label for="album">Album</label>
+        <input type="text" name="album" [(ngModel)]="newTrack.album" required>
+      </div>
+      <div class="form-row">
+        <label for="cover">Cover</label>
+        <input type="text" name="cover" [(ngModel)]="newTrack.cover" required>
+        <img *ngIf="newTrack.cover" [src]="newTrack.cover" alt="{{ newTrack.name }}" width="40" height="40">
+      </div>
+      <div class="form-row">
+        <label for="artist">Artista</label>
+        <input type="text" name="artist" [(ngModel)]="newTrack.artist" required>
+      </div>
+      <div class="form-row">
+        <label for="uid">Id</label>
+        <input type="text" name="uid" [(ngModel)]="newTrack.uid" required>
+      </div>
+      <div class="form-buttons">
+        <button class="admin-button" type="submit">{{ isEditing ? 'Guardar Cambios' : 'Agregar Canción' }}</button>
+        <button class="admin-button" type="button" *ngIf="isEditing" (click)="onCancelEdit()">Atras</button>
+      </div>
     </form>
   </div>
 </div>
