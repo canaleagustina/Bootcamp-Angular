@@ -1,4 +1,3 @@
-// admin-page.component.ts
 import { Component, Input, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TrackModel } from '@core/models/tracks.model';
