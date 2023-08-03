@@ -29,7 +29,7 @@ export class AdminPageComponent {
         this.tracks = data;
       },
       (error) => {
-        console.error('Error al obtener las canciones desde la API:', error);
+        console.error('Error al obtener las canciones', error);
       }
     );
   }
@@ -45,7 +45,7 @@ export class AdminPageComponent {
       // Llamar al servicio para actualizar solo el nombre de la canción
       this.adminService.updateTrack$(this.selectedTrack).subscribe(
         (response) => {
-          console.log('Track name updated successfully:', response);
+          console.log('Canción actualizada:', response);
           this.newTrack = { name: '', album: '', cover: '', url: '', uid: '' };
           this.isEditing = false;
           this.trackForm.resetForm(); // Resetear el formulario después de guardar los cambios
@@ -59,13 +59,13 @@ export class AdminPageComponent {
       // Agregar una nueva canción
       this.adminService.addTrack$(this.newTrack).subscribe(
         (response) => {
-          console.log('Track added successfully:', response);
+          console.log('Canción agregada:', response);
           this.newTrack = { name: '', album: '', cover: '', url: '', uid: '' };
           this.trackForm.resetForm(); // Resetear el formulario después de agregar una nueva canción
           this.fetchTracksFromApi(); // Refrescar la lista de canciones después de agregar una nueva canción
         },
         (error) => {
-          console.error('Error adding track:', error);
+          console.error('Error agregando track:', error);
         }
       );
     }
