@@ -19,10 +19,10 @@ export class AdminPageComponent {
   constructor(private tracksService: TrackService, private adminService: AdminService) {}
 
   ngOnInit(): void {
-    this.fetchTracksFromApi();
+    this.getTracks();
   }
 
-  fetchTracksFromApi(): void {
+ getTracks(): void {
     this.tracksService.getAllTracks$().subscribe(
       (data: TrackModel[]) => {
         this.tracks = data;
@@ -48,7 +48,7 @@ export class AdminPageComponent {
           this.newTrack = { name: '', album: '', cover: '', url: '', uid: '' };
           this.isEditing = false;
           this.trackForm.resetForm(); // Resetear el formulario después de guardar los cambios
-          this.fetchTracksFromApi(); // Refrescar la lista de canciones después de actualizar una canción
+          this.getTracks(); // Refrescar la lista de canciones después de actualizar una canción
         },
         (error) => {
           console.error('Error updating track name:', error);
@@ -61,7 +61,7 @@ export class AdminPageComponent {
           console.log('Canción agregada:', response);
           this.newTrack = { name: '', album: '', cover: '', url: '', uid: '' };
           this.trackForm.resetForm(); // Resetear el formulario después de agregar una nueva canción
-          this.fetchTracksFromApi(); // Refrescar la lista de canciones después de agregar una nueva canción
+          this.getTracks(); // Refrescar la lista de canciones después de agregar una nueva canción
         },
         (error) => {
           console.error('Error agregando track:', error);
@@ -85,7 +85,7 @@ export class AdminPageComponent {
     this.adminService.deleteTrack$(uid).subscribe(
       (response) => {
         console.log('Track deleted successfully:', response);
-        this.fetchTracksFromApi(); // Refrescar la lista de canciones después de eliminar una canción
+        this.getTracks(); // Refrescar la lista de canciones después de eliminar una canción
       },
       (error) => {
         console.error('Error deleting track:', error);

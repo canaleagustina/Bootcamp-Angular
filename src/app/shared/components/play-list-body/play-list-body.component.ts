@@ -14,10 +14,10 @@ export class PlayListBodyComponent implements OnInit {
   constructor(private tracksService: TrackService) { }
 
   ngOnInit(): void {
-    this.fetchTracksFromApi();
+    this.getTracks();
   }
 
-  fetchTracksFromApi(): void {
+ getTracks(): void {
     this.tracksService.getAllTracks$().subscribe(
       (data: TrackModel[]) => {
         this.tracks = data;
