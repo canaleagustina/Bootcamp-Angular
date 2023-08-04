@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { TrackModel } from '@core/models/tracks.model';
 import { TrackService } from '@modules/tracks/services/track.service';
@@ -22,7 +22,7 @@ export class AdminPageComponent {
     this.getTracks();
   }
 
- getTracks(): void {
+  getTracks(): void {
     this.tracksService.getAllTracks$().subscribe(
       (data: TrackModel[]) => {
         this.tracks = data;
@@ -33,41 +33,49 @@ export class AdminPageComponent {
     );
   }
 
-  @ViewChild('trackForm') trackForm!: NgForm; // Obtener una referencia al formulario
-
   onAddTrack(event: Event, form: NgForm): void {
     event.preventDefault();
-    if (this.isEditing && this.selectedTrack) {
-      // Actualizar solo el nombre de la canción en el objeto selectedTrack
-      this.selectedTrack.name = this.newTrack.name;
+    if (!this.isEditing) {
+      this.addTrack(form);
+    } else {
+      this.saveOrCancelEdit(form);
+    }
+  }
 
-      // Llamar al servicio para actualizar solo el nombre de la canción
+  private addTrack(form: NgForm): void {
+    this.adminService.addTrack$(this.newTrack).subscribe(
+      (response) => {
+        console.log('Canción agregada:', response);
+        this.clearFormAndRefresh(form);
+      },
+      (error) => {
+        console.error('Error agregando track:', error);
+      }
+    );
+  }
+
+  private saveOrCancelEdit(form: NgForm): void {
+    if (this.isEditing && this.selectedTrack) {
+      this.selectedTrack.name = this.newTrack.name;
       this.adminService.updateTrack$(this.selectedTrack).subscribe(
         (response) => {
           console.log('Canción actualizada:', response);
-          this.newTrack = { name: '', album: '', cover: '', url: '', uid: '' };
-          this.isEditing = false;
-          this.trackForm.resetForm(); // Resetear el formulario después de guardar los cambios
-          this.getTracks(); // Refrescar la lista de canciones después de actualizar una canción
+          this.clearFormAndRefresh(form);
         },
         (error) => {
-          console.error('Error updating track name:', error);
-        }
-      );
-    } else {
-      // Agregar una nueva canción
-      this.adminService.addTrack$(this.newTrack).subscribe(
-        (response) => {
-          console.log('Canción agregada:', response);
-          this.newTrack = { name: '', album: '', cover: '', url: '', uid: '' };
-          this.trackForm.resetForm(); // Resetear el formulario después de agregar una nueva canción
-          this.getTracks(); // Refrescar la lista de canciones después de agregar una nueva canción
-        },
-        (error) => {
-          console.error('Error agregando track:', error);
+          console.error('Error editando:', error);
         }
       );
     }
+    this.isEditing = false; // Salir del modo de edición
+    this.selectedTrack = undefined;
+  }
+
+  private clearFormAndRefresh(form: NgForm): void {
+    form.resetForm();
+    this.newTrack = { name: '', album: '', cover: '', url: '', uid: '' };
+    this.getTracks();
+    this.isEditing = false; // Asegurarse de que isEditing sea falso
   }
 
   onEditTrack(track: TrackModel): void {
@@ -76,19 +84,14 @@ export class AdminPageComponent {
     this.isEditing = true;
   }
 
-  onCancelEdit(): void {
-    this.isEditing = false;
-    this.trackForm.resetForm(); // Resetear el formulario después de cancelar la edición
-  }
-
   onDeleteTrack(uid: string): void {
     this.adminService.deleteTrack$(uid).subscribe(
       (response) => {
-        console.log('Track deleted successfully:', response);
+        console.log('Track borrado:', response);
         this.getTracks(); // Refrescar la lista de canciones después de eliminar una canción
       },
       (error) => {
-        console.error('Error deleting track:', error);
+        console.error('Error borrando track:', error);
       }
     );
   }

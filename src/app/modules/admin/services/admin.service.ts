@@ -1,4 +1,3 @@
-// admin.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -18,7 +17,9 @@ export class AdminService {
   }
 
   updateTrack$(track: TrackModel): Observable<any> {
-    return this.http.put(`${this.URL}/tracks/${track.uid}`, track);
+    const editUrl = `${this.URL}/tracks/edit/${track.uid}`;
+    const trackForUpdate = { ...track };
+    return this.http.put(editUrl, trackForUpdate);
   }
 
   deleteTrack$(uid: string): Observable<any> {
