@@ -17,9 +17,13 @@ export class HistoryPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
   receiveData(event: string): void {
     console.log('History page component (Padre)', event);
-    this.listResults$ = this.searchService.searchTracks$(event);
+    if (event === '') {
+      this.listResults$ = of([]);
+    } else {
+      this.listResults$ = this.searchService.searchTracks$(event);
+    }
   }
+  
 }

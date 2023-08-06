@@ -22,6 +22,8 @@ export class SearchComponent implements OnInit {
       console.log('🔴 Llamamos a nuestra API HTTP GET---> ', term);
     } else {
       this.searchResults = []; // Limpiar los resultados si el término de búsqueda es menor a 3 letras
+      this.callbackData.emit(''); // Emitir un término vacío para borrar la lista en el componente HistoryPageComponent
     }
   }
+  
 }
