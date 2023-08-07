@@ -17,10 +17,9 @@ export class AdminService {
   }
 
   updateTrack$(track: TrackModel): Observable<any> {
-    const editUrl = `${this.URL}/tracks/edit/${track.uid}`;
-    const trackForUpdate = { ...track };
-    return this.http.put(editUrl, trackForUpdate);
+    return this.http.put(`${this.URL}/tracks/edit/${track.uid}`, track);
   }
+  
 
   deleteTrack$(uid: string): Observable<any> {
     return this.http.delete(`${this.URL}/tracks/delete/${uid}`);
