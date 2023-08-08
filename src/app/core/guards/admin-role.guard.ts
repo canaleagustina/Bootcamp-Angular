@@ -18,7 +18,7 @@ export class AdminRoleGuard implements CanActivate {
     }
   }
 
-  // método público para obtener el rol del usuario.
+  // Método público para obtener el rol del usuario.
   getRole(): string {
     return this.cookieService.get('role');
   }

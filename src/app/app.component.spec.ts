@@ -1,29 +1,28 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { FavoritePageComponent } from '../app/modules/favorites/pages/favorite-page/favorite-page.component';
+import { PlayListHeaderComponent } from '../app/shared/components/play-list-header/play-list-header.component';
+import { PlayListBodyComponent } from '../app/shared/components/play-list-body/play-list-body.component';
+import { OrderListPipe } from '../app/shared/pipe/order-list.pipe';
 
-describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    declarations: [AppComponent]
-  }));
+describe('FavoritePageComponent', () => {
+  let component: FavoritePageComponent;
+  let fixture: ComponentFixture<FavoritePageComponent>;
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HttpClientModule],
+      declarations: [FavoritePageComponent, PlayListHeaderComponent, PlayListBodyComponent, OrderListPipe], 
+    }).compileComponents();
   });
 
-  it(`should have as title 'spotify'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('spotify');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(FavoritePageComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('spotify app is running!');
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 });

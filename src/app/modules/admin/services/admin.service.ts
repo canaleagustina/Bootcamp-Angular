@@ -20,7 +20,6 @@ export class AdminService {
     return this.http.put(`${this.URL}/tracks/edit/${track.uid}`, track);
   }
   
-
   deleteTrack$(uid: string): Observable<any> {
     return this.http.delete(`${this.URL}/tracks/delete/${uid}`);
   }

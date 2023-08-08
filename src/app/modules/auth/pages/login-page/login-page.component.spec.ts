@@ -1,21 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms'; 
 
 import { LoginPageComponent } from './login-page.component';
+import { AuthService } from '../../services/auth.service';  
 
 describe('AuthPageComponent', () => {
   let component: LoginPageComponent;
   let fixture: ComponentFixture<LoginPageComponent>;
 
-  beforeEach(() => {
+  beforeEach(() => { 
     TestBed.configureTestingModule({
-      declarations: [LoginPageComponent]
+      imports: [HttpClientModule, ReactiveFormsModule], 
+      declarations: [LoginPageComponent],
+      providers: [AuthService] 
     });
     fixture = TestBed.createComponent(LoginPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', () => { 
     expect(component).toBeTruthy();
   });
 });
