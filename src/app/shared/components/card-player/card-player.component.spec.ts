@@ -4,7 +4,8 @@ import { ImgBrokenDirective } from '../../../shared/directives/img-broken.direct
 
 describe('CardPlayerComponent', () => {
   let component: CardPlayerComponent;
-  let fixture: ComponentFixture<CardPlayerComponent>; 
+  let fixture: ComponentFixture<CardPlayerComponent>;  
+  
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
