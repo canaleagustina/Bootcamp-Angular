@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing'; 
-
 import { CardPlayerComponent } from './card-player.component';
+import { ImgBrokenDirective } from '../../../shared/directives/img-broken.directive'; // Asegúrate de que la ruta sea correcta
 
 describe('CardPlayerComponent', () => {
   let component: CardPlayerComponent;
@@ -9,9 +8,9 @@ describe('CardPlayerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CardPlayerComponent],
-      imports: [HttpClientTestingModule], 
-    }).compileComponents();
+      declarations: [CardPlayerComponent, ImgBrokenDirective] // Asegúrate de declarar la directiva aquí
+    })
+    .compileComponents();
   });
 
   beforeEach(() => {
